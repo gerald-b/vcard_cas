@@ -63,6 +63,7 @@ void FrmMain::btnSaveActionSplit()
 {
     bool finishedWithoutError = true;
     int filecounter = -1;
+    QString currentOutputFile = "";
     QFile * file = new QFile(this->ui->lblSrcVCard->text());
     QFileInfo * fi = new QFileInfo(this->ui->lblSrcVCard->text());
     if (file->open(QIODevice::ReadOnly))
@@ -76,7 +77,8 @@ void FrmMain::btnSaveActionSplit()
                 ++filecounter;
             }
             QFile output(fi->dir().path().append(QString("/vcard_%1.vcf").arg(filecounter,4,10,QChar('0'))));
-            if (output.exists())
+
+            if (output.exists() && output.fileName() != currentOutputFile)
             {
                 if (output.isWritable())
                 {
@@ -130,6 +132,7 @@ void FrmMain::btnSaveActionSplit()
                 finishedWithoutError = false;
                 break;
             }
+            currentOutputFile = output.fileName();
             QTextStream out(&output);
             out << line << "\n";
             if (output.isOpen())
