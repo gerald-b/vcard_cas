@@ -42,3 +42,51 @@ void FrmMain::on_btnSrcVCard_clicked()
         this->ui->btnSave->setEnabled(false);
     }
 }
+
+void FrmMain::on_btnSave_clicked()
+{
+    if (0 == this->ui->tabWidget->currentIndex())
+    {
+        // Reserved 4 other branch
+    }
+    else if (1 == this->ui->tabWidget->currentIndex())
+    {
+        int filecounter = -1;
+        QFile * file = new QFile(this->ui->lblSrcVCard->text());
+        QFileInfo * fi = new QFileInfo(this->ui->lblSrcVCard->text());
+        if (file->open(QIODevice::ReadOnly))
+        {
+            QTextStream in(file);
+            while (!in.atEnd())
+            {
+                QString line = in.readLine();
+                if (line.toUpper().startsWith("BEGIN:VCARD"))
+                {
+                    ++filecounter;
+                }
+                QFile output(fi->dir().path().append(QString("/vcard_%1.vcf").arg(filecounter,4,10,QChar('0'))));
+                if (!output.open(QIODevice::WriteOnly | QIODevice::Append))
+                {
+                    QMessageBox::critical(this,
+                                          tr("Error"),
+                                          tr("File \"%1\" could not opened!\nProcessing is stopped!").arg(output.fileName()),
+                                          QMessageBox::Ok
+                                          );
+                    break;
+                }
+                QTextStream out(&output);
+                out << line << "\n";
+                if (output.isOpen())
+                {
+                    output.close();
+                }
+            }
+            file->close();
+        }
+        QMessageBox::information(this,"Info","Fertig");
+    }
+    else
+    {
+        QMessageBox::critical(this,tr("Error"),tr("No valid tab selected!"),QMessageBox::Ok);
+    }
+}
