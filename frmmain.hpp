@@ -25,5 +25,6 @@ private slots:
 
 private:
     Ui::FrmMain *ui;
+    void btnSaveActionSplit(void);
 };
 #endif // FRMMAIN_HPP
