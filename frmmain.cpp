@@ -7,6 +7,7 @@ FrmMain::FrmMain(QWidget *parent)
 {
     ui->setupUi(this);
 
+    this->setWindowTitle(MY_PRODUCT);
     ui->btnSave->setEnabled(false);
     if (ui->tabWidget->count() >= 1)
     {
@@ -24,5 +25,5 @@ FrmMain::~FrmMain()
 
 void FrmMain::on_actionAbout_triggered()
 {
-    QMessageBox::information(this,tr("Information"),QString("Version: ").append(MY_VERSION), QMessageBox::Ok);
+    QMessageBox::information(this,tr("Information"),QString("Product: ").append(MY_PRODUCT).append("\nVersion: ").append(MY_VERSION), QMessageBox::Ok);
 }
