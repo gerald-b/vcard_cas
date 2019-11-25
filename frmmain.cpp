@@ -87,11 +87,11 @@ void FrmMain::on_btnSave_clicked()
         }
         if (finishedWithoutError)
         {
-            QMessageBox::information(this,"Info","Fertig");
+            QMessageBox::information(this,tr("Info"),tr("Process finished!"));
         }
         else
         {
-            QMessageBox::warning(this,"Warning","Process finished with error(s)!",QMessageBox::Ok);
+            QMessageBox::warning(this,tr("Warning"),tr("Process finished with error(s)!"),QMessageBox::Ok);
         }
     }
     else
