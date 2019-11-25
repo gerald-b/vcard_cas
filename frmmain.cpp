@@ -66,6 +66,50 @@ void FrmMain::on_btnSave_clicked()
                     ++filecounter;
                 }
                 QFile output(fi->dir().path().append(QString("/vcard_%1.vcf").arg(filecounter,4,10,QChar('0'))));
+                if (output.exists())
+                {
+                    if (output.isWritable())
+                    {
+                        int ret = QMessageBox::question(this,
+                                              tr("Question"),
+                                              tr("File \"%1\" exists.\nDo you want to override it?").arg(output.fileName()),
+                                              QMessageBox::Yes | QMessageBox::No
+                                              );
+                        if (QMessageBox::Yes == ret)
+                        {
+                            if(output.remove())
+                            {
+                                QMessageBox::critical(this,
+                                                      tr("Error"),
+                                                      tr("File \"%1\" could not removed (for override proposal).\nProcessing is stopped!").arg(output.fileName()),
+                                                      QMessageBox::Ok
+                                                      );
+                                finishedWithoutError = false;
+                                break;
+                            }
+                        }
+                        else
+                        {
+                            QMessageBox::warning(this,
+                                                 tr("Warning"),
+                                                 tr("Override was not desired.\nProcessing is stopped!"),
+                                                 QMessageBox::Ok
+                                                 );
+                            finishedWithoutError = false;
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        QMessageBox::critical(this,
+                                              tr("Error"),
+                                              tr("File \"%1\" exists and override is not possible\nProcessing is stopped!").arg(output.fileName()),
+                                              QMessageBox::Ok
+                                              );
+                        finishedWithoutError = false;
+                        break;
+                    }
+                }
                 if (!output.open(QIODevice::WriteOnly | QIODevice::Append))
                 {
                     QMessageBox::critical(this,
