@@ -27,3 +27,18 @@ void FrmMain::on_actionAbout_triggered()
 {
     QMessageBox::information(this,tr("Information"),QString("Product: ").append(MY_PRODUCT).append("\nVersion: ").append(MY_VERSION), QMessageBox::Ok);
 }
+
+void FrmMain::on_btnSrcVCard_clicked()
+{
+    QString file = QFileDialog::getOpenFileName(this,tr("Source VCARD"),".",tr("VCard (*.vcf *.vcard);;All files (*.*)"));
+    if (!file.isEmpty())
+    {
+        this->ui->lblSrcVCard->setText(file);
+        this->ui->btnSave->setEnabled(true);
+    }
+    else
+    {
+        this->ui->lblSrcVCard->setText(tr("Please select a file"));
+        this->ui->btnSave->setEnabled(false);
+    }
+}

@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QMessageBox>
+#include <QFileDialog>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class FrmMain; }
@@ -18,6 +19,7 @@ public:
 
 private slots:
     void on_actionAbout_triggered();
+    void on_btnSrcVCard_clicked();
 
 private:
     Ui::FrmMain *ui;
