@@ -29,3 +29,20 @@ FORMS += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+#Target Version
+MY_VERSION_MAJOR=0
+MY_VERSION_MINOR=1
+MY_VERSIOM_PATCH=0
+MY_VERSION_REVISON=0
+
+DEFINES += MY_VERSION_MAJOR=\"\\\"$${MY_VERSION_MAJOR}\\\"\"
+DEFINES += MY_VERSION_MAJOR=\"\\\"$${MY_VERSION_MAJOR}\\\"\"
+DEFINES += MY_VERSION_MINOR=\"\\\"$${MY_VERSION_MINOR}\\\"\"
+DEFINES += MY_VERSIOM_PATCH=\"\\\"$${MY_VERSIOM_PATCH}\\\"\"
+DEFINES += MY_VERSION_REVISON=\"\\\"$${MY_VERSION_REVISON}\\\"\"
+
+# Version must be set for Windows to set "File-Version"
+VERSION = $${MY_VERSION_MAJOR}"."$${MY_VERSION_MINOR}"."$${MY_VERSIOM_PATCH}"."$${MY_VERSION_REVISON}
+MY_VERSION = $${VERSION}
+DEFINES += MY_VERSION=\"\\\"$${MY_VERSION}\\\"\"

@@ -21,3 +21,8 @@ FrmMain::~FrmMain()
 {
     delete ui;
 }
+
+void FrmMain::on_actionAbout_triggered()
+{
+    QMessageBox::information(this,tr("Information"),QString("Version: ").append(MY_VERSION), QMessageBox::Ok);
+}
