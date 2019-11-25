@@ -51,6 +51,7 @@ void FrmMain::on_btnSave_clicked()
     }
     else if (1 == this->ui->tabWidget->currentIndex())
     {
+        bool finishedWithoutError = true;
         int filecounter = -1;
         QFile * file = new QFile(this->ui->lblSrcVCard->text());
         QFileInfo * fi = new QFileInfo(this->ui->lblSrcVCard->text());
@@ -72,6 +73,7 @@ void FrmMain::on_btnSave_clicked()
                                           tr("File \"%1\" could not opened!\nProcessing is stopped!").arg(output.fileName()),
                                           QMessageBox::Ok
                                           );
+                    finishedWithoutError = false;
                     break;
                 }
                 QTextStream out(&output);
@@ -83,7 +85,14 @@ void FrmMain::on_btnSave_clicked()
             }
             file->close();
         }
-        QMessageBox::information(this,"Info","Fertig");
+        if (finishedWithoutError)
+        {
+            QMessageBox::information(this,"Info","Fertig");
+        }
+        else
+        {
+            QMessageBox::warning(this,"Warning","Process finished with error(s)!",QMessageBox::Ok);
+        }
     }
     else
     {
